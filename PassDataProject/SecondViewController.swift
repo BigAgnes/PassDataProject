@@ -29,20 +29,21 @@ class SecondViewController: UIViewController {
 //    }
     
     func layout() {
-        
         greetings.translatesAutoresizingMaskIntoConstraints = false
         greetings.font = .systemFont(ofSize: 35, weight: .light)
-        greetings.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
-        greetings.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Go back", for: .normal)
         button.backgroundColor = .white
         button.setTitleColor(.black, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
         
-        button.topAnchor.constraint(equalTo: greetings.bottomAnchor, constant: 50).isActive = true
-        button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        
+        NSLayoutConstraint.activate([
+            greetings.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            greetings.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                                     
+            button.topAnchor.constraint(equalTo: greetings.bottomAnchor, constant: 50),
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
         button.addTarget(.none, action: #selector(goBack), for: .touchUpInside)
     }
     

@@ -33,42 +33,50 @@ class ViewController: UIViewController {
         name.text = "Pass Data Project"
         name.translatesAutoresizingMaskIntoConstraints = false
         name.font = .systemFont(ofSize: 35, weight: .light)
-        name.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
-        name.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
         login.translatesAutoresizingMaskIntoConstraints = false
         login.placeholder = "Login"
         login.borderStyle = .roundedRect
-        login.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 50).isActive = true
-        login.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        login.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 30).isActive = true
-        login.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 30).isActive = true
         
         password.translatesAutoresizingMaskIntoConstraints = false
         password.placeholder = "Password"
         password.borderStyle = .roundedRect
         password.isSecureTextEntry = true
-        password.topAnchor.constraint(equalTo: login.bottomAnchor, constant: 20).isActive = true
-        password.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        password.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 30).isActive = true
-        password.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 30).isActive = true
-        
-//        NSLayoutConstraint(item: button, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         
         button.setTitle("Login", for: .normal)
         button.backgroundColor = .white
         button.setTitleColor(.black, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         
-        button.topAnchor.constraint(equalTo: password.bottomAnchor, constant: 50).isActive = true
-        button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        button.addTarget(self, action: #selector(goInSecondViewController), for: .touchUpInside)
-        
         result.text = "Greetings"
         result.translatesAutoresizingMaskIntoConstraints = false
-        result.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20).isActive = true
-        result.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        NSLayoutConstraint.activate([
+            name.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            name.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            name.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
+            
+            login.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 30),
+            login.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            login.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 30),
+            login.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 30),
+            
+            password.topAnchor.constraint(equalTo: login.bottomAnchor, constant: 20),
+            password.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            password.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 30),
+            password.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 30),
+            
+            button.topAnchor.constraint(equalTo: password.bottomAnchor, constant: 50),
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            result.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20),
+            result.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        
+        
+        button.addTarget(self, action: #selector(goInSecondViewController), for: .touchUpInside)
     }
+//        NSLayoutConstraint(item: button, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
     
     @objc func goInSecondViewController() {
         let svc = SecondViewController()
