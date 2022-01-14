@@ -78,13 +78,11 @@ class ViewController: UIViewController {
             
             login.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 30),
             login.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            login.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 30),
-            login.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 30),
+            login.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
             
             password.topAnchor.constraint(equalTo: login.bottomAnchor, constant: 20),
             password.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            password.leadingAnchor.constraint(greaterThanOrEqualTo: view.leadingAnchor, constant: 30),
-            password.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 30),
+            password.widthAnchor.constraint(equalTo: login.widthAnchor),
             
             button.topAnchor.constraint(equalTo: password.bottomAnchor, constant: 50),
             button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -96,7 +94,9 @@ class ViewController: UIViewController {
             button.topAnchor.constraint(equalTo: password.bottomAnchor, constant: 20)
         ])
         regularConstraints.append(contentsOf: [
-            login.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 50)
+            login.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 50),
+            login.widthAnchor.constraint(lessThanOrEqualToConstant: 400),
+            password.widthAnchor.constraint(lessThanOrEqualToConstant: 400)
         ])
     }
     
