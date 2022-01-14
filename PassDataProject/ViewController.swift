@@ -55,6 +55,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .secondarySystemBackground
+        self.navigationController?.navigationBar.isHidden = true
         setupUI()
         setupConstraints()
         NSLayoutConstraint.activate(sharedConstraints)
@@ -78,7 +79,7 @@ class ViewController: UIViewController {
             
             login.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 30),
             login.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            login.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.4),
+            login.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.7),
             
             password.topAnchor.constraint(equalTo: login.bottomAnchor, constant: 20),
             password.centerXAnchor.constraint(equalTo: view.centerXAnchor),
