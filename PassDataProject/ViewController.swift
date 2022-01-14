@@ -8,11 +8,45 @@
 import UIKit
 
 class ViewController: UIViewController {
-    var login = UITextField()
-    var password = UITextField()
-    var result = UILabel()
-    var name = UILabel()
-    var button = UIButton()
+    private lazy var login: UITextField = {
+        let loginTF = UITextField()
+        loginTF.translatesAutoresizingMaskIntoConstraints = false
+        loginTF.placeholder = "Login"
+        loginTF.borderStyle = .roundedRect
+        return loginTF
+    }()
+    private lazy var password: UITextField = {
+        let passwordTF = UITextField()
+        passwordTF.translatesAutoresizingMaskIntoConstraints = false
+        passwordTF.placeholder = "Password"
+        passwordTF.borderStyle = .roundedRect
+        passwordTF.isSecureTextEntry = true
+        return passwordTF
+    }()
+    private lazy var result: UILabel = {
+        let resultLabel = UILabel()
+        resultLabel.text = "Greetings"
+        resultLabel.translatesAutoresizingMaskIntoConstraints = false
+        return resultLabel
+    }()
+    private lazy var name: UILabel = {
+        let nameLabel = UILabel()
+        nameLabel.text = "Pass Data Project"
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.font = .systemFont(ofSize: 35, weight: .light)
+        return nameLabel
+    }()
+    private lazy var button: UIButton = {
+        let buttonIn = UIButton()
+        buttonIn.setTitle("Login", for: .normal)
+        buttonIn.backgroundColor = .white
+        buttonIn.setTitleColor(.black, for: .normal)
+        buttonIn.translatesAutoresizingMaskIntoConstraints = false
+        return buttonIn
+    }()
+    private var compactConstraints: [NSLayoutConstraint] = []
+    private var regularConstraints: [NSLayoutConstraint] = []
+    private var sharedConstraints: [NSLayoutConstraint] = []
     
 //    @IBOutlet weak var loginTF: UITextField!
 //    @IBOutlet weak var passwordTF: UITextField!
@@ -21,37 +55,23 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .secondarySystemBackground
+        setupUI()
+        setupConstraints()
+        NSLayoutConstraint.activate(sharedConstraints)
+        layoutTrait(traitCollection: UIScreen.main.traitCollection)
+        buttonAction()
+    }
+    
+    func setupUI() {
         view.addSubview(login)
         view.addSubview(password)
         view.addSubview(result)
         view.addSubview(name)
         view.addSubview(button)
-        layout()
     }
     
-    func layout() {
-        name.text = "Pass Data Project"
-        name.translatesAutoresizingMaskIntoConstraints = false
-        name.font = .systemFont(ofSize: 35, weight: .light)
-        
-        login.translatesAutoresizingMaskIntoConstraints = false
-        login.placeholder = "Login"
-        login.borderStyle = .roundedRect
-        
-        password.translatesAutoresizingMaskIntoConstraints = false
-        password.placeholder = "Password"
-        password.borderStyle = .roundedRect
-        password.isSecureTextEntry = true
-        
-        button.setTitle("Login", for: .normal)
-        button.backgroundColor = .white
-        button.setTitleColor(.black, for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        result.text = "Greetings"
-        result.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
+    func setupConstraints() {
+        sharedConstraints.append(contentsOf: [
             name.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
             name.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             name.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.1),
@@ -72,11 +92,39 @@ class ViewController: UIViewController {
             result.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20),
             result.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-        
-        
+        compactConstraints.append(contentsOf: [
+            button.topAnchor.constraint(equalTo: password.bottomAnchor, constant: 20)
+        ])
+        regularConstraints.append(contentsOf: [
+            login.topAnchor.constraint(equalTo: name.bottomAnchor, constant: 50)
+        ])
+    }
+    
+    func layoutTrait(traitCollection:UITraitCollection) {
+        if (!sharedConstraints[0].isActive) {
+           NSLayoutConstraint.activate(sharedConstraints)
+        }
+        if traitCollection.horizontalSizeClass == .compact && traitCollection.verticalSizeClass == .regular {
+            if regularConstraints.count > 0 && regularConstraints[0].isActive {
+                NSLayoutConstraint.deactivate(regularConstraints)
+            }
+            NSLayoutConstraint.activate(compactConstraints)
+        } else {
+            if compactConstraints.count > 0 && compactConstraints[0].isActive {
+                NSLayoutConstraint.deactivate(compactConstraints)
+            }
+            NSLayoutConstraint.activate(regularConstraints)
+        }
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        layoutTrait(traitCollection: traitCollection)
+    }
+    
+    func buttonAction() {
         button.addTarget(self, action: #selector(goInSecondViewController), for: .touchUpInside)
     }
-//        NSLayoutConstraint(item: button, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
     
     @objc func goInSecondViewController() {
         let svc = SecondViewController()
@@ -86,6 +134,9 @@ class ViewController: UIViewController {
         }
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            self.view.endEditing(true)
+        }
 //    @IBAction func unwindSegue(segue: UIStoryboardSegue) {
 //        guard segue.identifier == "unwindSegue" else { return }
 //        guard let svc = segue.source as? SecondViewController else { return }
@@ -99,9 +150,5 @@ class ViewController: UIViewController {
 //        guard let dvc = segue.destination as? SecondViewController else { return }
 //        dvc.login = loginTF.text
 //    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
 }
 
